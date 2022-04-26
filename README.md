@@ -1,1 +1,1 @@
-# asl-discordbot
+# YGOTournamentBot

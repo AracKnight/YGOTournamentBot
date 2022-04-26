@@ -18,9 +18,9 @@ class TournamentCog(commands.Cog):
             for reaction in message.reactions:
                 print(str(reaction.users))
                 async for user in reaction.users():
-                    print("for")
                     u = await self.bot.fetch_user(user.id)
-                    participants.append(str(u.name) + "," + str(u.discriminator))
+                    if not u.name == "YGOTournamentBot":
+                        participants.append(str(u.name) + "," + str(u.discriminator))
             tourney_name = "Muri-locals-" + date.today().strftime("%Y-%m-%d")
             kts = KTSHelper(name=tourney_name, players=participants)
             tournament_file = kts.get_xml()
