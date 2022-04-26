@@ -1,9 +1,21 @@
 import xml.etree.cElementTree as ET
 from datetime import date
 import os
+import logging
+
+FORMAT = "[%(asctime)s - %(levelname)s - %(filename)s:%(lineno)s - %(funcName)s()] %(message)s"
+logging.basicConfig(filename='bot.log', level=logging.INFO, format=FORMAT)
+logger = logging.getLogger(__name__)
 
 class KTSHelper:
-    def __init__(self, name, players):
+    """
+    Class to held tournament specific data and construct a KTS readable .Tournament file
+    """
+    def __init__(self, name: str, players: list) -> None:
+        """
+        takes a name for the tournament and a list of the players to participate formatted as "lastname,first name"
+        constructs a valid xml that can be used in the KTS
+        """
         self.xml = ET.Element("Tournament")
         ET.SubElement(self.xml, "Name").text = name
         ET.SubElement(self.xml, "ID").text = "X99-360236"
@@ -57,11 +69,14 @@ class KTSHelper:
             ET.SubElement(tourn_player, "Notes")
         ET.SubElement(self.xml, "Matches")
 
-    def get_xml(self):
+    def get_xml(self) -> str:
+        """
+        Writes Tournament-xml to file and returns the filename/path
+        """
         tournament_file = "teilnehmer.Tournament"
         try:
             os.remove(self.tournament_file)
-        except Exception:
+        except FileNotFoundError:
             pass
         tree = ET.ElementTree(self.xml)
         tree.write(tournament_file, encoding="UTF-8", xml_declaration = True)
