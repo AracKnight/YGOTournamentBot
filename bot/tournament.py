@@ -26,7 +26,6 @@ class TournamentCog(commands.Cog):
             message = await channel.fetch_message(channel.last_message_id)
             participants = []
             for reaction in message.reactions:
-                print(str(reaction.users))
                 async for user in reaction.users():
                     u = await self.bot.fetch_user(user.id)
                     if not u.name == "YGOTournamentBot":
@@ -37,7 +36,7 @@ class TournamentCog(commands.Cog):
             with open(tournament_file, "rb") as f:
                 await ctx.channel.send("Hier die Tournament-Datei:", file=send_file(f, tournament_file))
         except Exception as e:
-            logger.ERROR(str(e))
+            logger.error(str(e))
 
     @commands.command(name='reset', help="Setze Anmeldungen und Rolle zurück")
     async def reset(self, ctx, ):
@@ -59,7 +58,7 @@ class TournamentCog(commands.Cog):
             post = await channel.send("**Reagiert auf diesen Post, um euch für die Remote Locals anzumelden.**\n\nMit der Anmeldung stimmt ihr zu, dass ihr potenziell bei einem unserer @Content Creator im Stream zu sehen/hören seid\n\nAnmeldungen werden nach jedem Turnier zurückgesetzt und sind ab dem darauf folgendem Montag wieder offen.")
             await post.add_reaction("\U00002705")
         except Exception as e:
-            logger.ERROR(str(e))
+            logger.error(str(e))
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload: RawReactionActionEvent):
