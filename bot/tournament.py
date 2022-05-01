@@ -22,6 +22,8 @@ class TournamentCog(commands.Cog):
         Let build an xml-Tournament file and sends it
         """
         try:
+            if not any(role.name in ['Judge', 'Content Creator'] for role in ctx.message.author.roles):
+                return None
             channel = utils.get(ctx.guild.channels, name="anmeldung")
             message = await channel.fetch_message(channel.last_message_id)
             participants = []

@@ -75,7 +75,7 @@ class KTSHelper:
         """
         tournament_file = "teilnehmer.Tournament"
         try:
-            os.remove(self.tournament_file)
+            os.remove(tournament_file)
         except FileNotFoundError:
             pass
         tree = ET.ElementTree(self.xml)
